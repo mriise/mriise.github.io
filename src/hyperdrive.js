@@ -1,0 +1,1 @@
+import {hyperdrive} from 'https://wzrd.in/standalone/hyperdrive@latest'
