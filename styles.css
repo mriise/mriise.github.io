@@ -1,5 +1,52 @@
 body {
+	display: flex;
+	font-family: Ubuntu;
 	text-align: center;
-	margin: auto;
+}
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 70vw;
+	margin-left: 30vw;
+	background-color: grey;
+	color: white;
+	text-align: center;
+}
+div.profile {
+	height: 100%; 
+	width: 30vw;
+	min-width: 250px;
+	position: fixed; 
+	top: 0; 
+	left: 0;
+	background-color: grey;
+	overflow-x: hidden;
+	padding-top: 20vh;
 }
 
+div.content {
+	margin-left: 60vw;
+}
+
+@media screen and (max-width: 700px) {
+	body {
+		flex-direction: column;
+	}
+	div.profile {
+		position: fixed; 
+		top:0;
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	nav a {float: left;}
+	div.content {
+		margin: auto;
+		margin-top: 5vw;
+	}
+	footer {
+		width: 100%;
+		margin-left: auto;
+	}
+}
