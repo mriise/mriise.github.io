@@ -1,1 +1,3 @@
-import {hyperdrive} from 'https://wzrd.in/standalone/hyperdrive@latest'
+//expose SDK as a module
+
+export default window.datSdk
