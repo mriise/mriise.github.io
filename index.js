@@ -1,12 +1,13 @@
 import {html, render} from './src/preact.js'
 
-import SDK from './src/hyperdrive.js'
-
 
 
 
 (async function () {
-	const {Hypercore, Hyperdrive, resolveName, getIdentity, deriveSecret, close} = await SDK()
+	const SDK = await window.datSDK()
+	console.log(SDK)
+
+	const {Hypercore, Hyperdrive, resolveName, getIdentity, deriveSecret, close} = SDK
 	var drive = Hyperdrive('test');
 
 	await new Promise(res => drive.once('ready', () => res()))
@@ -14,7 +15,7 @@ import SDK from './src/hyperdrive.js'
 	
 	console.log('stat', await drive.stat('/'))
 
-	console.log(await resolveName('dat://beakerbrowser.com'))
+	console.log('beaker resolved', await resolveName('dat://beakerbrowser.com'))
 	// const url = `dat://${drive.key.toString('hex')}`
 
 	// TODO: Save this for later!
