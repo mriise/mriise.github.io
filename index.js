@@ -15,9 +15,9 @@ render(html`
 </div>
 <div class="content"> 
 	<a href="/">Helloo!</a>
-	<${HyperdriveViewer} SDK=${getSDK()}>
+	<!-- <${HyperdriveViewer} SDK=${getSDK()}>
 		
-	</${HyperdriveViewer}>
+	</${HyperdriveViewer}> -->
 	<footer>feet!</footer>
 </div>
 `, document.body);
