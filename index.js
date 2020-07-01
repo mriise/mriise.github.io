@@ -1,32 +1,10 @@
 import {html, render} from './src/preact.js'
+import HyperdriveViewer from './src/components/HyperdriveViewer.js'
 
 
-
-
-(async function () {
-	const SDK = await window.datSDK()
-	console.log(SDK)
-
-	const {Hypercore, Hyperdrive, resolveName, getIdentity, deriveSecret, close} = SDK
-	var drive = Hyperdrive('test');
-
-	await new Promise(res => drive.once('ready', () => res()))
-	console.log('drive ready')
-	
-	console.log('stat', await drive.stat('/'))
-
-	console.log('beaker resolved', await resolveName('dat://beakerbrowser.com'))
-	// const url = `dat://${drive.key.toString('hex')}`
-
-	// TODO: Save this for later!
-	// console.log(`Here's your URL: ${url}`)
-
-	// Check out the hyperdrive docs for what you can do with it
-	// https://www.npmjs.com/package/hyperdrive#api
-	await drive.writeFile('/example.txt', 'Hello World!')
-	console.log('Written example file!', await drive.readdir('/'))
-})();
-
+async function getSDK() {
+	return await window.datSDK()
+}
 
 
 render(html`
@@ -36,9 +14,11 @@ render(html`
     <p>so is this</p>
 </div>
 <div class="content"> 
-    <a href="/">Helloo!</a>
-    <footer>feet!</footer>
-
+	<a href="/">Helloo!</a>
+	<${HyperdriveViewer} SDK=${getSDK()}>
+		
+	</${HyperdriveViewer}>
+	<footer>feet!</footer>
 </div>
 `, document.body);
 
