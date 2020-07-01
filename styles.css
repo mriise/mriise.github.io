@@ -1,35 +1,57 @@
+html {
+	background-color: #121212;
+	font-family: Arial;
+
+}
 body {
 	display: flex;
-	font-family: Ubuntu;
 	text-align: center;
+}
+p {
+	color: grey;
 }
 footer {
 	position: fixed;
 	left: 0;
 	bottom: 0;
 	width: 70vw;
-	margin-left: 30vw;
-	background-color: grey;
+	margin-left: 40vw;
+	background-color: rgba(255, 255, 255, .08);
 	color: white;
 	text-align: center;
 }
 div.profile {
 	height: 100%; 
-	width: 30vw;
-	min-width: 250px;
+	width: 40vw;
 	position: fixed; 
 	top: 0; 
 	left: 0;
-	background-color: grey;
+	background-color: rgba(255, 255, 255, .08);
 	overflow-x: hidden;
-	padding-top: 20vh;
+	padding-top: 30vh;
+}
+div.profile div {
+	margin-left: 2vw;
+	display: flex;
+	justify-content: center;
+	/* border: 4px solid rgba(255, 255, 255, .05); */
+}
+
+div.profile div.links {
+	flex-direction: column;
+	text-align: left;
+}
+
+div.profile img {
+	border-radius: 10px;
+	border: 4px solid rgba(255, 255, 255, .05) ;
 }
 
 div.content {
-	margin-left: 60vw;
+	margin-left: 40vw;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
 	body {
 		flex-direction: column;
 	}
@@ -39,11 +61,15 @@ div.content {
 		width: 100%;
 		height: auto;
 		position: relative;
+		padding-top: 0;
 	}
 	nav a {float: left;}
 	div.content {
 		margin: auto;
-		margin-top: 5vw;
+		margin-top: 20px;
+	}
+	div.profile img {
+		transform: scale(.6);
 	}
 	footer {
 		width: 100%;

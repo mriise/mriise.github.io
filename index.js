@@ -9,9 +9,20 @@ async function getSDK() {
 
 render(html`
 <div class="profile">
-    <nav>fax</nav> 
-    <p>this is dumb</p>
-    <p>so is this</p>
+    <nav>
+		<div>
+			<img src="./content/images/pfp.jpg"/>
+			<div class="links">
+				<p>fax</p>
+				<p>Check out my github!</p>
+			</div>
+			
+
+		</div>
+
+
+	</nav> 
+    
 </div>
 <div class="content"> 
 	<a href="/">Helloo!</a>
