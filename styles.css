@@ -89,7 +89,12 @@ div.content {
 		position: relative;
 		padding-top: 0;
 	}
-	nav a {float: left;}
+	div.profile div.links {
+		padding: 0;
+		margin: 0;
+		align-items: flex-start;
+		flex-shrink: 0;
+	}
 	div.content {
 		margin: auto;
 		margin-top: 20px;

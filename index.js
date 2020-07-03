@@ -9,17 +9,15 @@ async function getSDK() {
 
 render(html`
 <div class="profile">
-    <nav>
-		<div>
-			<img src="./content/images/pfp.jpg"/>
-			<div class="links">
-				<a href="https://github.com/mriise">GitHub</a>
-				<a href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
-			</div>
+	<div>
+		<img src="./content/images/pfp.jpg"/>
+		<div class="links">
+			<a href="https://github.com/mriise">GitHub</a>
+			<a href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
 		</div>
+	</div>
 
 
-	</nav> 
     
 </div>
 <div class="content">
