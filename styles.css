@@ -34,7 +34,7 @@ div.profile {
 	justify-content: center;
 	min-width: fit-content;
 	width: 40vw;
-	background-color: rgba(255, 255, 255, .05);
+	background-color: #1e1e1e;
 	overflow-x: hidden;
 	/* padding-top: 30vh; */
 }
