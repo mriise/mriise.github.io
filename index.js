@@ -13,23 +13,19 @@ render(html`
 		<div>
 			<img src="./content/images/pfp.jpg"/>
 			<div class="links">
-				<p>fax</p>
-				<p>Check out my github!</p>
+				<a href="https://github.com/mriise">GitHub</a>
+				<a href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
 			</div>
-			
-
 		</div>
 
 
 	</nav> 
     
 </div>
-<div class="content"> 
-	<a href="/">Helloo!</a>
-	<!-- <${HyperdriveViewer} SDK=${getSDK()}>
-		
-	</${HyperdriveViewer}> -->
-	<footer>feet!</footer>
+<div class="content">
+	<strong><a>Website is still under development! <br/> come back another time!</a></strong>
+	<!-- <${HyperdriveViewer} SDK=${getSDK()}></${HyperdriveViewer}> -->
+	<!-- <footer></footer> -->
 </div>
 `, document.body);
 
