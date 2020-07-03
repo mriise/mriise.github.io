@@ -11,7 +11,7 @@ Made with Preact
 - [ ] Accent color picker
 - [ ] Resume
 
-not-so-goals
+#### not-so-goals
 - [ ] Blog
 - [ ] Hyperdrive page from git submodule
 - [ ] Website fuzzy-search
