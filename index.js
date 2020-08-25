@@ -20,11 +20,11 @@ render(html`
 	<strong><a>Website is still under development! <br/> come back another time!</a></strong>
 	<!-- <footer></footer> -->
 	<div class="panel">
-		<p class="text_content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+		<p class="text_content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa</p>
 	</div>
 	<div class="panel">ee</div>
 </div>
-<div id="cursor" class="fak"></div>
+<div id="cursor"></div>
 `, document.body);
 
 var cursor = document.getElementById('cursor')

@@ -6,6 +6,7 @@ html {
 	background-color: #121212;
 	font-family: Arial;
 	cursor: none;
+	box-sizing: border-box; 
 }
 
 #cursor {
@@ -35,8 +36,10 @@ div {
 }
 body {
 	margin: 0;
+	height: 100%;
 	display: flex;
 	text-align: center;
+	
 }
 p, a {
 	cursor: none;
@@ -57,6 +60,7 @@ div.profile {
 	flex-direction: column;
 	justify-content: center;
 	min-width: fit-content;
+	min-width: -moz-fit-content;
 	width: 40vw;
 	background-color: #1e1e1e;
 	overflow-x: hidden;
@@ -74,6 +78,7 @@ div.profile div.links {
 	align-items: flex-start;
 	/* padding-left: 20px; */
 	color: var(--accent-color);
+	flex-shrink: 0;
 }
 
 div.profile a.link {
@@ -98,7 +103,9 @@ div.profile img {
 	border-radius: 15px;
 	object-fit: scale-down;
 	max-width: 250px;
+	max-height: 250px;
 	flex-grow: 0;
+	flex-shrink: 1;
 	border: 4px solid var(--accent-color); ;
 }
 
