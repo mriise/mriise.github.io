@@ -4,6 +4,7 @@
 	--cursor-y: -100px;
 	/*  #8A00FF #008cffcc #00ff62cc #ff0062cc */
 }
+
 html {
 	background-color: #121212;
 	font-family: Arial;
@@ -60,11 +61,12 @@ footer {
 div.profile {
 	flex-direction: column;
 	justify-content: center;
-	min-width: fit-content;
+	/* min-width: fit-content; */
 	min-width: -moz-fit-content;
 	width: 40vw;
+	flex-shrink: 0;
 	background-color: #1e1e1e;
-	overflow-x: hidden;
+	overflow: auto;
 	/* padding-top: 30vh; */
 }
 div.profile div {
@@ -102,7 +104,6 @@ div.profile a.link {
 div.profile img {
 	border-radius: 15px;
 	object-fit: scale-down;
-	max-width: 250px;
 	max-height: 250px;
 	flex-grow: 0;
 	flex-shrink: 1;
@@ -110,12 +111,11 @@ div.profile img {
 }
 
 div.content {
-	overflow: auto;
-	flex-grow: 1;
+	overflow-y: auto;
 	flex-direction: column;
 	justify-content: center;
+	flex: 1 1 auto;
 }
-
 div.content div.panel {
 	background-color: rgba(255, 255, 255, .07);
 	margin: 10px 35px;
@@ -124,14 +124,15 @@ div.content div.panel {
 }
 
 div.content .text-content {
-	padding: 0 20px;
+	
+	padding: 10px 20px;
 	text-align: left;
 	animation: load-in 1s;
 }
 @keyframes load-in { 
-	from { 
+	from {
 		transform: translateX(25px);
-		opacity:0; 
+		opacity:0;
 	} 
 	to { 
 		transform: translateX(0);
@@ -156,25 +157,26 @@ div.content .text-content {
 		flex-direction: column;
 	}
 	div.profile {
-		position: fixed; 
+		position: fixed;
 		top:0;
 		width: 100%;
-		height: auto;
+		/* height: auto; */
 		position: relative;
 		padding-top: 0;
 	}
 	div.profile div.links {
-		padding: 0;
-		margin: 0;
+		/* padding: 0; */
+		/* margin: 0; */
 		align-items: flex-start;
 		flex-shrink: 0;
 	}
 	div.content {
 		margin: auto;
 		margin-top: 20px;
+		justify-content: start;
 	}
 	div.profile img {
-		transform: scale(.6);
+		max-height: 150px;
 	}
 	footer {
 		width: 100%;

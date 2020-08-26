@@ -7,6 +7,9 @@ export default class MarkdownViewer extends Component {
 	constructor(props) {
 		super();
 		this.src = props.src
+		this.sanitizeOpt = {
+			allowedTags: [ 'b', 'i', 'ul', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'em', 'strong', 'a' ],
+		}
 		this.state = { innerHtml: undefined };
 	}
 
@@ -15,7 +18,7 @@ export default class MarkdownViewer extends Component {
 			let res = await fetch(src)
 			return marked(await res.text())
 		}
-		fetchMarkdown(this.src).then(html => this.setState({ innerHtml: html}) )
+		fetchMarkdown(this.src).then(html => this.setState({ innerHtml: sanitizeHtml(html, this.sanitizeOpt)}) )
 	}
 
 	render(props, state) {

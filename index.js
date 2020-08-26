@@ -12,7 +12,7 @@ render(html`
 	<div>
 		<img src="./content/images/pfp.webp"/>
 		<div class="links">
-			<a class="link" href="https://github.com/mriise">GitHub</a>
+			<a class="link" href="https://github.com/mriise"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
 			<a class="link" href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
 		</div>
 	</div>
