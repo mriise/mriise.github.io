@@ -22,10 +22,12 @@ render(html`
 	<!-- <div class="panel">
 		<p class="text-content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa</p>
 	</div> -->
-	<div class="panel"><${MarkdownViewer} src="./content/text/test.md" /></div>
+	<div class="panel"><${MarkdownViewer} src="./content/text/hello.md" /></div>
+	<div class="panel"><${MarkdownViewer} src="./content/text/markdown.md" /></div>
 	
 </div>
 <div id="cursor" class="mouse"></div>
+
 `, document.body);
 
 var cursor = document.getElementById('cursor')

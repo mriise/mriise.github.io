@@ -10,14 +10,13 @@ html {
 	cursor: none;
 	color: var(--accent-color);
 	box-sizing: border-box;
-	overflow-x: hidden;
+	
 }
 
 #cursor {
 	position: absolute;
 	width: 20px;
 	height: 20px;
-	overflow: visible;
 	backface-visibility: hidden;
 	pointer-events: none;
 	border: 3px solid white;
@@ -37,6 +36,7 @@ div {
 	display: flex;
 }
 body {
+	overflow: hidden;
 	margin: 0;
 	height: 100%;
 	display: flex;
@@ -110,6 +110,7 @@ div.profile img {
 }
 
 div.content {
+	overflow: auto;
 	flex-grow: 1;
 	flex-direction: column;
 	justify-content: center;
