@@ -1,11 +1,12 @@
 import {html, render} from './src/preact.js'
+import MarkdownViewer from './src/components/MarkdownViewer.js'
 // import HyperdriveViewer from './src/components/HyperdriveViewer.js'
 
 
 // async function getSDK() {
 // 	return await window.datSDK()
 // }
-
+const testHtml = 'The <strong>price</strong> is'
 render(html`
 <div class="profile">
 	<div>
@@ -17,22 +18,23 @@ render(html`
 	</div>
 </div>
 <div class="content">
-	<strong><a>Website is still under development! <br/> come back another time!</a></strong>
-	<!-- <footer></footer> -->
-	<div class="panel">
-		<p class="text_content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa</p>
-	</div>
-	<div class="panel">ee</div>
+	<!-- <strong><a>Website is still under development! <br/> come back another time!</a></strong> -->
+	<!-- <div class="panel">
+		<p class="text-content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa</p>
+	</div> -->
+	<div class="panel"><${MarkdownViewer} src="./content/text/test.md" /></div>
+	
 </div>
-<div id="cursor"></div>
+<div id="cursor" class="mouse"></div>
 `, document.body);
 
 var cursor = document.getElementById('cursor')
 const followCursor = (e) => { 
-	let x = (e.pageX - 10) + 'px'
-	let y = (e.pageY - 10) + 'px'
+	let x = (e.clientX) + 'px'
+	let y = (e.clientY) + 'px'
 	window.requestAnimationFrame(() => {
-		cursor.style.transform = `translate3d(${x}, ${y}, 0)`
+		document.documentElement.style.setProperty('--cursor-x', x);
+		document.documentElement.style.setProperty('--cursor-y', y);
 	})
 	
 }
@@ -40,14 +42,12 @@ document.addEventListener('mousemove', followCursor)
 
 
 const mouseover = (e) => {
-	cursor.style.height = 10 + 'px'
-	cursor.style.width = 10 + 'px'
+	cursor.classList.replace('mouse', 'pointer')
 }
 const mouseout = (e) => {
-	cursor.style.height = 20 + 'px'
-	cursor.style.width = 20 + 'px'
+	cursor.classList.replace('pointer', 'mouse')
 }
-var links = document.querySelectorAll('a')
+var links = document.querySelectorAll('.link')
 links.forEach((link) => {
 	link.addEventListener('mouseover', mouseover)
 	link.addEventListener('mouseout', mouseout)
