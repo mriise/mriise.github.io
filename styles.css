@@ -10,6 +10,7 @@
 	--cursor-y: -100px;
 	/*  #8A00FF #008cffcc #00ff62cc #ff0062cc */
 }
+
 html {
 	background-color: var(--background);
 	font-family: Arial;
@@ -37,11 +38,14 @@ html {
 	border: 4px dashed var(--cursor) !important;
 	transform: translate3d(calc(var(--cursor-x) - 13px), calc(var(--cursor-y) - 13px), 0) scale(0.6);
 }
+
 div {
 	display: flex;
 }
 body {
+	overflow: hidden;
 	margin: 0;
+	height: 100%;
 	display: flex;
 	text-align: center;
 }
@@ -63,7 +67,8 @@ footer {
 div.profile {
 	flex-direction: column;
 	justify-content: center;
-	min-width: fit-content;
+	/* min-width: fit-content; */
+	min-width: -moz-fit-content;
 	width: 40vw;
 	flex-shrink: 0;
 	background-color: var(--surface);
@@ -77,7 +82,7 @@ div.profile div.theme-selector {
 div.profile div {
 	justify-content: center;
 	align-items: center;
-	margin: 0 20px;
+	margin: 0 25px;
 	/* border: 4px solid rgba(255, 255, 255, .05); */
 }
 
@@ -109,13 +114,14 @@ div.profile a.link {
 div.profile img {
 	border-radius: 15px;
 	object-fit: scale-down;
+	max-height: 250px;
 	flex-grow: 0;
 	flex-shrink: 1;
 	border: 4px solid var(--primary); ;
 }
 
 div.content {
-	flex-grow: 1;
+	overflow-y: auto;
 	flex-direction: column;
 	justify-content: center;
 	flex: 1 1 auto;
@@ -126,6 +132,23 @@ div.content div.panel {
 	border-radius: 6px;
 	text-align: left;
 }
+
+div.content .text-content {
+	
+	padding: 10px 20px;
+	text-align: left;
+	animation: load-in 1s;
+}
+@keyframes load-in { 
+	from {
+		transform: translateX(25px);
+		opacity:0;
+	} 
+	to { 
+		transform: translateX(0);
+		opacity:1;
+	}
+  }
 
 @media screen and (max-width: 1200px) {
 	div.profile div {
@@ -139,7 +162,6 @@ div.content div.panel {
 		align-items: center;
 		justify-items: center;
 	}
-	
 }
 
 @media screen and (max-width: 700px) {
@@ -147,16 +169,16 @@ div.content div.panel {
 		flex-direction: column;
 	}
 	div.profile {
-		position: fixed; 
+		position: fixed;
 		top:0;
 		width: 100%;
-		height: auto;
+		/* height: auto; */
 		position: relative;
 		padding-top: 0;
 	}
 	div.profile div.links {
-		padding: 0;
-		margin: 0;
+		/* padding: 0; */
+		/* margin: 0; */
 		align-items: flex-start;
 		flex-shrink: 0;
 	}
@@ -166,9 +188,10 @@ div.content div.panel {
 	div.content {
 		margin: auto;
 		margin-top: 20px;
+		justify-content: start;
 	}
 	div.profile img {
-		transform: scale(.6);
+		max-height: 150px;
 	}
 	footer {
 		width: 100%;
