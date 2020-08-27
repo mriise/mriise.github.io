@@ -1,4 +1,4 @@
-import {html, Component} from '../preact.js'
+import {html, Component} from '../lib/preact.js'
 
 export default class HyperdriveViewer extends Component {
 

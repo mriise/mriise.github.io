@@ -1,4 +1,6 @@
-import {html, render} from './src/preact.js'
+import {html, render} from './src/lib/preact.js'
+import MarkdownViewer from './src/components/MarkdownViewer.js'
+import ThemeSelector from './src/components/ThemeSelector.js'
 // import HyperdriveViewer from './src/components/HyperdriveViewer.js'
 
 
@@ -10,7 +12,8 @@ import {html, render} from './src/preact.js'
 render(html`
 <div class="profile">
 	<div>
-		<img src="./content/images/pfp.jpg"/>
+		<${ThemeSelector} />
+		<img src="./content/images/pfp.webp"/>
 		<div class="links">
 			<a href="https://github.com/mriise">GitHub</a>
 			<a href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
