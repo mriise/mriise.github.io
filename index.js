@@ -1,5 +1,6 @@
 import {html, render} from './src/lib/preact.js'
 import MarkdownViewer from './src/components/MarkdownViewer.js'
+import ThemeSelector from './src/components/ThemeSelector.js'
 // import HyperdriveViewer from './src/components/HyperdriveViewer.js'
 
 
@@ -10,6 +11,7 @@ const testHtml = 'The <strong>price</strong> is'
 render(html`
 <div class="profile">
 	<div>
+		<${ThemeSelector} />
 		<img src="./content/images/pfp.webp"/>
 		<div class="links">
 			<a class="link" href="https://github.com/mriise"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
@@ -31,6 +33,7 @@ render(html`
 `, document.body);
 
 var cursor = document.getElementById('cursor')
+
 const followCursor = (e) => { 
 	let x = (e.clientX) + 'px'
 	let y = (e.clientY) + 'px'
