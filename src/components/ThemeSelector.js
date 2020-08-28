@@ -1,7 +1,5 @@
 import {html, Component} from '../lib/preact.js'
 
-// gist version here: https://gist.github.com/mriise/a256943b553ec8b56ac164f73635099a
-
 const themes = {
 	dark: {
 		primary: '#ff00ff',
@@ -21,13 +19,13 @@ const themes = {
 	},
 	coral: {
 		primary: '#643cf2',
-		//'#84f79d',
 		secondary: '#f79d84',
 		background: '#f2d589',
 		surface: '#f79d84',
 		surfaceSecondary: '#cbe0ff',
 		cursor: '#e53242'
 	}
+	//'#84f79d',
 }
 
 export default class MarkdownViewer extends Component {
@@ -62,11 +60,12 @@ export default class MarkdownViewer extends Component {
 	render(props, state) {
 		return html`
 		<div class="theme-selector">
-			${Object.keys(themes).map(k => html`<a theme=${k} class="theme-option" onClick=${this.changeTheme}>
-			<div style=${"width: 20px; border:2px solid var(--secondary); margin:auto; height:20px; border-radius: 50%; pointer-events:none;" + `background-color: ${themes[k].background}; `}>
-				
-			</div>
-			</a>`)}
+			${Object.keys(themes).map(k => 
+			html`
+				<a theme=${k} class="theme-option" onClick=${this.changeTheme}>
+					<div style=${"width: 20px; border:2px solid var(--secondary); margin:auto; height:20px; border-radius: 50%; pointer-events:none;" + `background-color: ${themes[k].background}; `}></div>
+				</a>`
+			)}
 			<!-- <a class="link"><i class="far fa-circle"></i></a> -->
 			<!-- <i class="fas fa-mouse-pointer"></i> -->
 		</div>`
