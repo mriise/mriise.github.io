@@ -67,7 +67,7 @@ footer {
 }
 div.profile {
 	flex-direction: column;
-	justify-content: center;
+	justify-content: start;
 	min-width: fit-content;
 	min-width: -moz-fit-content;
 	width: 35vw;
