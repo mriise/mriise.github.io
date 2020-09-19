@@ -1,0 +1,3 @@
+[submodule "sites/shared-worker"]
+	path = sites/shared-worker
+	url = https://github.com/mriise/shared-worker-test.git
