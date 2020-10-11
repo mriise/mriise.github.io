@@ -10,6 +10,7 @@ Made with Preact
 - [ ] Public key
 - [ ] Accent color picker
 - [ ] Resume
+- [ ] Add dedicated blog
 
 #### not-so-goals
 - [ ] Blog
