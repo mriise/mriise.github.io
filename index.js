@@ -26,7 +26,9 @@ render(html`
 	</div> -->
 	<div class="panel"><${MarkdownViewer} src="./content/text/hello.md" /></div>
 	<div class="panel"><${MarkdownViewer} src="./content/text/markdown.md" /></div>
-	
+	<div class="panel"><${MarkdownViewer} src="./content/text/discord_cdn.md" /></div>
+	<div class="panel"><${MarkdownViewer} src="./content/text/shared-worker.md" /></div>
+
 </div>
 <div id="cursor" class="mouse"></div>
 

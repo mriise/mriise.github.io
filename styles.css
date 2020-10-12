@@ -239,7 +239,7 @@ div.content .text-content {
 	}
 	div.content {
 		margin: auto;
-		margin-top: 20px;
+		/* margin-top: 20px; */
 		justify-content: start;
 	}
 	div.profile img {
