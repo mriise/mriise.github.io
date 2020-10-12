@@ -1,4 +1,4 @@
-## In Browser Markdown Rendering With Preact
+# In-Browser Markdown Rendering With Preact
 
 this is markdown rendered with Preact and htm!
 
