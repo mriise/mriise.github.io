@@ -57,6 +57,9 @@ export default class GithubActivity extends Component {
 							break;
 					}
 				})}
+				<li>
+					see the rest <a href="https://github.com/mriise?tab=repositories">here</a>...
+				</li>
 			</ul>
 		</div>`
 	}
