@@ -1,6 +1,7 @@
 import {html, render} from './src/lib/preact.js'
 import MarkdownViewer from './src/components/MarkdownViewer.js'
 import ThemeSelector from './src/components/ThemeSelector.js'
+import GithubActivity from './src/components/GithubActivity.js';
 // import HyperdriveViewer from './src/components/HyperdriveViewer.js'
 
 
@@ -18,6 +19,7 @@ render(html`
 			<a class="link" href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
 		</div>
 	</div>
+	<${GithubActivity}/>
 </div>
 <div class="content">
 	<!-- <strong><a>Website is still under development! <br/> come back another time!</a></strong> -->

@@ -61,10 +61,10 @@ export default class MarkdownViewer extends Component {
 		return html`
 		<div class="theme-selector">
 			${Object.keys(themes).map(k => 
-			html`
-				<a theme=${k} class="theme-option" onClick=${this.changeTheme}>
-					<div style=${"width: 20px; border:2px solid var(--secondary); margin:auto; height:20px; border-radius: 50%; pointer-events:none;" + `background-color: ${themes[k].background}; `}></div>
-				</a>`
+				html`
+					<a theme=${k} class="theme-option" onClick=${this.changeTheme}>
+						<div style=${"width: 20px; border:2px solid var(--secondary); margin:auto; height:20px; border-radius: 50%; pointer-events:none; cursor: pointer;" + `background-color: ${themes[k].background}; `}></div>
+					</a>`
 			)}
 			<!-- <a class="link"><i class="far fa-circle"></i></a> -->
 			<!-- <i class="fas fa-mouse-pointer"></i> -->
