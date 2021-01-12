@@ -5,39 +5,15 @@
 	--surface: #282828;
 	--surfaceSecondary: #383838;
 	--cursor: #0CCA98;
-
-	--cursor-x: -100px;
-	--cursor-y: -100px;
 	/*  #8A00FF #008cffcc #00ff62cc #ff0062cc */
 }
 
 html {
 	background-color: var(--background);
 	font-family: Arial;
-	/* cursor: none; */
 	color: var(--primary);
 	height: 100%;
 	box-sizing: border-box;
-}
-
-#cursor {
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	backface-visibility: hidden;
-	pointer-events: none;
-	border: 3px solid var(--cursor);
-	transition-timing-function: cubic-bezier(.03,.89,.39,1.24);
-	transition-duration: 0.1s;
-	will-change: transform;
-	border-radius: 50%;
-}
-.mouse {
-	transform: translate(calc(var(--cursor-x) - 13px), calc(var(--cursor-y) - 13px));
-}
-.pointer {
-	border: 4px dashed var(--cursor) !important;
-	transform: translate(calc(var(--cursor-x) - 13px), calc(var(--cursor-y) - 13px)) scale(0.6);
 }
 
 div {
@@ -51,7 +27,6 @@ body {
 	text-align: center;
 }
 p, a {
-	/* cursor: none; */
 	color: var(--primary);
 }
 footer {
@@ -76,7 +51,7 @@ div.profile {
 	overflow: auto;
 }
 div.profile div.theme-selector {
-	cursor: pointer;
+	/* cursor: pointer; */
 	flex-direction: column;
 	flex-basis: max-content;
 }
@@ -115,17 +90,6 @@ div.profile a.link {
 	padding: 10px;
 	border-radius: 4px;
 	margin: 5px 0;
-}
-
-@media(hover: hover) and (pointer: fine) {
-	a.link:hover ~ #cursor {
-		width: 200px;
-	}
-}
-@media(pointer: coarse){
-	#cursor {
-		visibility: hidden;
-	}
 }
 
 div.profile img {
@@ -197,7 +161,6 @@ div.content .text-content {
 		align-items: center;
 		justify-items: center;
 	}
-	
 }
 
 @media screen and (max-width: 700px) {

@@ -28,37 +28,10 @@ render(html`
 	<div class="panel"><${MarkdownViewer} src="./content/text/markdown.md" /></div>
 	<div class="panel"><${MarkdownViewer} src="./content/text/discord_cdn.md" /></div>
 	<div class="panel"><${MarkdownViewer} src="./content/text/shared_workers.md" /></div>
-	
+	<div class="panel"><${MarkdownViewer} src="./content/text/cursor.md" /></div>
+
 </div>
-<div id="cursor" class="mouse"></div>
-
 `, document.body);
-
-// var cursor = document.getElementById('cursor')
-
-// const followCursor = (e) => { 
-// 	let x = (e.clientX) + 'px'
-// 	let y = (e.clientY) + 'px'
-// 	window.requestAnimationFrame(() => {
-// 		document.documentElement.style.setProperty('--cursor-x', x);
-// 		document.documentElement.style.setProperty('--cursor-y', y);
-// 	})
-	
-// }
-// document.addEventListener('mousemove', followCursor)
-
-
-// const mouseover = (e) => {
-// 	cursor.classList.replace('mouse', 'pointer')
-// }
-// const mouseout = (e) => {
-// 	cursor.classList.replace('pointer', 'mouse')
-// }
-// var links = document.querySelectorAll('.link')
-// links.forEach((link) => {
-// 	link.addEventListener('mouseover', mouseover)
-// 	link.addEventListener('mouseout', mouseout)
-// })
 
 //<${HyperdriveViewer} SDK=${getSDK()}></${HyperdriveViewer}>
 
