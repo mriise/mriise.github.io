@@ -36,7 +36,6 @@ export default class GithubActivity extends Component {
 						case 'PushEvent':
 							let commits = ghevent.payload.commits
 							for (let commit in commits) {
-								commits[commit].html_url = ''
 								commits[commit].shortSha = commits[commit].sha.substring(0, 7)
 							}
 							return html`

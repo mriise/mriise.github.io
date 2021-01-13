@@ -13,7 +13,12 @@ render(html`
 <div class="profile">
 	<div>
 		<${ThemeSelector} />
-		<img src="./content/images/pfp.webp" alt="This is me!"/>
+		<picture>
+			<source srcset="./content/images/pfp.webp" type="image/webp">
+			<source srcset="./content/images/pfp.jpg" type="image/jpeg"> 
+			<img src="./content/images/pfp.jpg" alt="This is a picture of me!"/>
+		</picture>
+		
 		<div class="links">
 			<a class="link" href="https://github.com/mriise"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
 			<a class="link" href="./content/publicKey.txt"><i class="fa fa-key" aria-hidden="true"></i> Public Key</a>
