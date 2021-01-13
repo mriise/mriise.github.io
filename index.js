@@ -13,10 +13,11 @@ render(html`
 <div class="profile">
 	<div>
 		<${ThemeSelector} />
+
 		<picture>
-			<source srcset="./content/images/pfp.webp" type="image/webp">
-			<source srcset="./content/images/pfp.jpg" type="image/jpeg"> 
-			<img src="./content/images/pfp.jpg" alt="This is a picture of me!"/>
+			<source srcset="./content/images/pfp.webp" type="image/webp"/>
+			<source srcset="./content/images/pfp.jpg" type="image/jpeg"/> 
+			<img class="pfp" src="./content/images/pfp.webp" alt="This is a picture of me!"/>
 		</picture>
 		
 		<div class="links">

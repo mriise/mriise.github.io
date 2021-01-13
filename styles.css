@@ -92,13 +92,13 @@ div.profile a.link {
 	margin: 5px 0;
 }
 
-div.profile img {
+.pfp {
 	border-radius: 15px;
 	object-fit: scale-down;
 	max-height: 250px;
 	flex-grow: 0;
 	flex-shrink: 1;
-	border: 4px solid var(--primary); ;
+	border: 4px solid var(--primary);
 }
 
 div.content {
@@ -233,7 +233,7 @@ div.content .text-content {
 		/* padding-top: 100px; */
 		/* justify-content: start; */
 	}
-	div.profile img {
+	.pfp {
 		max-height: 150px;
 	}
 	footer {
