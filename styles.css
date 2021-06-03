@@ -26,8 +26,11 @@ body {
 	display: flex;
 	text-align: center;
 }
-p, a {
+p {
 	color: var(--primary);
+}
+a {
+	color: var(--secondary)
 }
 footer {
 	display: flex;

@@ -2,8 +2,8 @@ import {html, Component} from '../lib/preact.js'
 
 const themes = {
 	dark: {
-		primary: '#ff00ff',
-		secondary: '#0CCA98',
+		primary: '#adadad',
+		secondary: '#643cf2',
 		background: '#1e1e1e',
 		surface: '#282828',
 		surfaceSecondary: '#383838',
@@ -11,7 +11,7 @@ const themes = {
 	},
 	light: {
 		primary: '#000000',
-		secondary: '#8B8989',
+		secondary: '#19a893',
 		background: '#FFFFFF',
 		surface: '#D0CFCF',
 		surfaceSecondary: '#b2b1b1',
@@ -19,13 +19,14 @@ const themes = {
 	},
 	coral: {
 		primary: '#643cf2',
-		secondary: '#f79d84',
+		secondary: '#0016d9',
 		background: '#f2d589',
 		surface: '#f79d84',
 		surfaceSecondary: '#cbe0ff',
 		cursor: '#e53242'
 	}
-	//'#84f79d',
+	//0CCA98 pleasant teal
+	//'#84f79d' super bright teal
 }
 
 export default class MarkdownViewer extends Component {
