@@ -3,7 +3,8 @@ import MarkdownViewer from './src/components/MarkdownViewer.js'
 import ThemeSelector from './src/components/ThemeSelector.js'
 import GithubActivity from './src/components/GithubActivity.js';
 // import HyperdriveViewer from './src/components/HyperdriveViewer.js'
-
+import {articles} from './content/text/index.js'
+import Test from './src/components/test.js'
 
 // async function getSDK() {
 // 	return await window.datSDK()
@@ -33,6 +34,7 @@ render(html`
 		<p class="text-content">The last thing you would want ing your aaaaaaaaaaaaaaaaaaa</p>
 	</div> -->
 	<div class="panel"><${MarkdownViewer} src="./content/text/hello.md" /></div>
+	${articles.map(article => html`<div class="panel"><${Test} article=${article} /></div>`)}
 	<div class="panel"><${MarkdownViewer} src="./content/text/markdown.md" /></div>
 	<div class="panel"><${MarkdownViewer} src="./content/text/discord_cdn.md" /></div>
 	<div class="panel"><${MarkdownViewer} src="./content/text/shared_workers.md" /></div>
