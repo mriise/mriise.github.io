@@ -7,7 +7,7 @@ Made with Preact
 - [ ] List github projects
 - [ ] Photography Portfolio
 - [ ] Contact Info
-- [ ] Public key
+- [x] Public key
 - [ ] Accent color picker
 - [ ] Resume
 - [ ] Add dedicated blog
