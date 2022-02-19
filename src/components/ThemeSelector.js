@@ -12,9 +12,9 @@ const themes = {
 	light: {
 		primary: '#000000',
 		secondary: '#19a893',
-		background: '#FFFFFF',
-		surface: '#D0CFCF',
-		surfaceSecondary: '#b2b1b1',
+		background: '#f2f2f2',
+		surface: '#FFFFFF',
+		surfaceSecondary: '#e3e3e3',
 		cursor: '#000000'
 	},
 	coral: {
