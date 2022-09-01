@@ -1,5 +1,6 @@
 # My name is Melanie!
 
+## TODO this website is old and i wanna make it staticly rendered
 I enjoy researching low level protocols and building browser-native packages!
 
 #### Active Research
