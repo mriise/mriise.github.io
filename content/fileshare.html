@@ -1,53 +1,112 @@
+<html lang="en-US">
+<title>Simple File Share</title>
+
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
 <body>
     <script type="module">
+        // i hate javascript.
+
         import { Encoder, Decoder, encode } from 'https://cdn.jsdelivr.net/npm/cbor-x@1.5.8/+esm'
-        import { createBLAKE3 } from 'https://cdn.jsdelivr.net/npm/hash-wasm@4/dist/blake3.umd.min.js/+esm'
+        import { createBLAKE3 } from 'https://cdn.jsdelivr.net/npm/hash-wasm@4.11.0/dist/blake3.umd.min.js/+esm'
+        // https://github.com/paulmillr/noble-ed25519/tree/90058fe15f3724b02caa5b4ab803da393e7bb8ef
+        // TODO: use builtin WebCrypto ed25519 impl.
+        // import { verify, sign } from 'https://cdn.jsdelivr.net/npm/@noble/ed25519@2.1.0/+esm'
 
         const ADDR_NAME = "wtAddress";
-        const CERTHASH_NAME = "wtCerthash";
-        const FILEHASH_NAME = "wtFileHash";
+        const PASSKEY_NAME = "wtPasskey";
+        const FILE_ID_NAME = "wtFileID";
+        const FETCH_NAME = "fetch";
 
 
         window.onload = async () => {
+            disableNonChrome();
             // load query param into fields
             (new URL(window.location.href)).searchParams.forEach((k, v) => document.getElementById(v).value = k);
-            setupMessageQueues();
+            window.downloading = new Array();
 
             // NOTE: only one instance of blake3 so only one file to verify at a time
             window.BLAKE3 = await createBLAKE3();
         }
 
-        function setupMessageQueues() {
-            window.downloading = new Array();
+        function disableNonChrome() {
+            if (!('showOpenFilePicker' in self)) {
+                let fetchButton = document.getElementById(FETCH_NAME);
+                fetchButton.disabled = true;
+                fetchButton.innerHTML = "Downloading files only availiable in Chrome/Edge";
+            }
         }
 
         window.webtransportClick = async () => {
+
+
             let wtAddress = document.getElementById(ADDR_NAME).value;
-            let wtCerthash = document.getElementById(CERTHASH_NAME).value;
-            let wtFileHash = document.getElementById(FILEHASH_NAME).value;
+            let wtCerthash = document.getElementById(PASSKEY_NAME).value;
+            let wtFileID = document.getElementById(FILE_ID_NAME).value;
 
-            let certhash = Uint8Array.from(atob(base64URLto64(wtCerthash)), c => c.charCodeAt(0));
+            let passkey = Uint8Array.from(atob(base64URLto64(wtCerthash)), c => c.charCodeAt(0));
+            let certhash = verifyWeekIndex(passkey);
 
+            /// [2 bytes week index, 32 bytes hash of cert] [2 bytes week index, 32 bytes hash of cert]
+            function verifyWeekIndex(passkey) {
+                // use stale index
+                const currentWeekIndex = timeToWeekIndex(Date.now()) - 1;
+                if (passkey.length != 68) {
+                    console.error("invalid passkey length, probably not a passkey.")
+                    throw "invalid length"
+                }
+                console.log(passkey)
+                const view = new DataView(passkey.buffer);
+                let passkeyStaleIndex = view.getUint16(0, true);
+                let passkeyHotIndex = view.getInt16(34, true);
+                if (passkeyStaleIndex == currentWeekIndex) {
+                    let out = passkey.buffer.slice(2, 34);
+                    console.log("Stale index valid @ week index", passkeyStaleIndex, btoa(String.fromCharCode(...new Uint8Array(out))))
+                    return out
+                } else if (passkeyHotIndex == currentWeekIndex) {
+                    let out = passkey.buffer.slice(36, 68);
+                    console.log("Hot index valid @ week index", passkeyHotIndex, btoa(String.fromCharCode(...new Uint8Array(out))))
+                    return out
+                }
+                console.error("passkey invalid current week", { currentWeekIndex, passkeyStaleIndex, passkeyHotIndex })
+
+            }
+
+            console.log(certhash)
             // dont start a new connection if we already have one
             // TODO: quick swapping of servers? this assumes only one connection
             let transport;
             if (window.transport !== undefined) {
                 transport = window.transport;
             } else {
-                transport = new WebTransport(wtAddress, {
-                    serverCertificateHashes: [
-                        {
-                            algorithm: "sha-256",
-                            value: certhash.buffer
-                        }
-                    ]
-                });
-                window.transport = transport;
+                try {
+                    transport = new WebTransport(wtAddress, {
+                        serverCertificateHashes: [
+                            {
+                                algorithm: "sha-256",
+                                value: certhash
+                            }
+                        ]
+                    });
+                    window.transport = transport;
+                }
+                catch (e) {
+                    alert("unable to connect, try reloading the page", e)
+                }
             }
 
 
             // console.log(transport)
             await transport.ready;
+
+            //TODO: abstract signaling stream and fetch/retreive into different functions
+            document.getElementById("")
 
             // Create a bidirectional stream
             // Every request will have its own bi stream
@@ -64,7 +123,7 @@
 
             var rawData = {
                 // needs to be array so it is encoded as array with individual unsigned so rust understands
-                hash: Uint8Array.from(atob(base64URLto64(wtFileHash)), c => c.charCodeAt(0))
+                hash: Uint8Array.from(atob(base64URLto64(wtFileID)), c => c.charCodeAt(0))
             };
             let data = encode(rawData);
 
@@ -87,6 +146,13 @@
         function base64URLencode(hash) {
             return base64to64URL(btoa(String.fromCharCode(...hash)))
         }
+
+        function timeToWeekIndex(time) {
+            const UNIX_WEEK = 604_800;
+
+            return Math.ceil((time / 1000) / UNIX_WEEK) - 1
+        }
+
 
         async function readIncomingSignaling(stream, number) {
             let d = new Decoder();
@@ -150,8 +216,8 @@
 
         /// Top level Stream of streams for accepting Uni
         async function receiveUnidirectional(transport) {
-            const uds = transport.incomingUnidirectionalStreams;
-            const reader = uds.getReader();
+            let uds = transport.incomingUnidirectionalStreams;
+            let reader = uds.getReader();
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) {
@@ -207,17 +273,19 @@
                     // file download completed
                     console.info("uni stream finished");
                     writer.close();
+
                     let computedHash = window.BLAKE3.digest('binary');
                     console.debug(computedHash, fileInfo.hash);
                     // I REALLY hate js, why is this the BEST way to see if two byte arrays are equal???
                     if (Object.is(computedHash, fileInfo.hash)) {
                         // TODO: not this filename, the one the user made
-                        alert(fileInfo.filename + " failed verification. DO NOT TRUST")
+                        alert(fileInfo.filename + " failed verification. FILE RECEIVED IS NOT THE FILE REQUESTED.")
                     }
                     // close out our hasher
                     window.BLAKE3.init()
                     // update UI
-                    updateDownloadProgress(hashText, 100)
+                    updateDownloadProgress(hashText, undefined)
+
                     break;
                 }
                 // value is a Uint8Array
@@ -231,13 +299,53 @@
             }
         }
 
+        async function debugSendTextFile(transport, text) {
+            const encoder = new TextEncoder();
+            const encoded = encoder.encode(text);
+            await sendUni(transport, encoded);
+        }
+
+        async function sendFile(transport) {
+            const files = await window.showOpenFilePicker();
+            const file = await files[0].getFile();
+
+            const buffer = await file.arrayBuffer();
+            console.log(buffer);
+
+            await sendUni(transport, buffer);
+        }
+
+        window.sendClick = sendFile;
+        async function sendUni(transport, buffer) {
+            const uds = await transport.createUnidirectionalStream();
+
+            const writer = uds.getWriter();
+
+            try {
+                await writer.ready;
+                await writer.write(buffer);
+                // for (const chunk of buffer) {
+                //     await writer.ready;
+                //     await writer.write(chunk);
+                //     console.log("Chunk written to sink.");
+                // }
+                // Call ready again to ensure that all chunks are written
+                // before closing the writer.
+                await writer.ready;
+                await writer.close();
+                console.log("All chunks written");
+            } catch (err) {
+                console.log("Error:", err);
+            }
+        }
+
         window.shareClick = async () => {
             let shareURL = new URL(window.location.href);
             shareURL.search = "";
 
             shareURL.searchParams.append(ADDR_NAME, document.getElementById(ADDR_NAME).value);
-            shareURL.searchParams.append(CERTHASH_NAME, document.getElementById(CERTHASH_NAME).value);
-            shareURL.searchParams.append(FILEHASH_NAME, document.getElementById(FILEHASH_NAME).value);
+            shareURL.searchParams.append(PASSKEY_NAME, document.getElementById(PASSKEY_NAME).value);
+            shareURL.searchParams.append(FILE_ID_NAME, document.getElementById(FILE_ID_NAME).value);
 
             // copy to clipboard
             navigator.clipboard.writeText(shareURL.href);
@@ -283,13 +391,12 @@
             span.appendChild(hashTextDiv);
             div.appendChild(span);
 
-            var bar = document.createElement("div");
+            var bar = document.createElement("progress");
+            bar.id = hashText + "-bar";
+            bar.max = 100;
+            bar.value = 0;
             bar.classList.add("progressBar")
 
-            var barInner = document.createElement("div");
-            barInner.id = hashText + "-bar";
-            barInner.classList.add("progressBarInner")
-            bar.appendChild(barInner);
             div.appendChild(bar);
 
 
@@ -300,12 +407,24 @@
         function updateDownloadProgress(hashText, percentDone) {
             let bar = document.getElementById(hashText + '-bar');
             // console.log(hashText, percentDone + '%');
-            bar.style.width = percentDone + '%';
+            if (percentDone == undefined) {
+                bar.remove()
+            } else {
+                bar.value = percentDone;
+            }
         }
 
+        window.whatClick = () => {
+            let what = document.getElementById("what");
+            what.style = undefined;
+        }
     </script>
 
     <style>
+        :root {
+            color-scheme: light dark;
+        }
+
         body {
             font-family: 'Courier New', Courier, monospace;
         }
@@ -335,22 +454,16 @@
             flex-direction: column;
             gap: 12px;
             padding: 10px;
-            width: 80%;
-            background-color: rgb(237, 237, 237);
+            /* width: 80%; */
+            background-color: rgb(94, 94, 94);
         }
 
         .progressBar {
             width: 100%;
-            height: 5px;
-            border: 1px solid gray;
-            border-radius: 3px;
-        }
-
-        .progressBarInner {
-            width: 1%;
-            height: 5px;
-            background-color: #1cf28c;
-            border-radius: 3px;
+            height: 20px;
+            /* border: 2px solid gray;
+            color: #1cf28c; */
+            /* border-radius: 3px; */
         }
 
         .file span {
@@ -375,18 +488,62 @@
         }
     </style>
 
-    <form onsubmit="return false">
-        <label for="wtAddress">Address and Port</label>
-        <input type="text" id="wtAddress" placeholder="Address" value="https://127.0.0.1:4433">
-        <label for="wtCerthash">Certhash</label>
-        <input type="text" id="wtCerthash" placeholder="Certhash" style="width: 450px;">
-        <label for="wtFileHash">File Hash</label>
-        <input type="text" id="wtFileHash" placeholder="File Hash" style="width: 450px;">
-        <button onclick="window.webtransportClick()">fetch</button>
-        <button onclick="window.shareClick()" id="shareButton">share</button>
-    </form>
+    <main style="max-width: 900px; margin: 10vh auto;">
+        <form onsubmit="return false">
+            <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+                <div style="padding: 5px 0px;">
+                    <label for="wtAddress"><i class="fa-solid fa-at"></i> Address</label>
+                    <input type="text" id="wtAddress" placeholder="Address" value="https://127.0.0.1:4999"
+                        style="field-sizing: content; padding: 0px 5px;">
+                </div>
+                <div style="padding: 5px 0px;">
+                    <label for="wtPasskey"><i class="fa-solid fa-key"></i> Passkey</label>
+                    <input type="text" id="wtPasskey" placeholder="Passkey" style="width: 700px;">
+                </div>
+                <div style="padding: 5px 0px;">
+                    <label for="wtFileID"><i class="fa-solid fa-file"></i> FileID</label>
+                    <input type="text" id="wtFileID" placeholder="File Hash" style="width: 450px;">
+                </div>
+            </div>
 
-    <div id="downloads" style="display: flex; flex-direction: column;">
 
-    </div>
+
+            <button onclick="window.webtransportClick()" id="fetch">download</button>
+            <button onclick="window.shareClick()" id="shareButton">create link</button>
+        </form>
+        <div style="display: none;">
+
+            <button onclick="window.sendClick(window.transport)">Upload</button>
+        </div>
+        <div id="downloads" style="display: flex; flex-direction: column;">
+
+        </div>
+
+        <div>
+            <h2 onclick="window.whatClick()" style="cursor: pointer; text-decoration: underline;">What is this?</h2>
+            <div id="what" style="display: none; ">
+                <p>This site has a tiny bit of JavaScript that connects directly to a <a
+                        href="https://www.w3.org/TR/webtransport/">WebTransport</a> server at the provided address and
+                    downloads files from it.</p>
+                <p>
+                <h3>Passkey</h3>Two <a href="https://www.w3.org/TR/webtransport/#certificate-hashes">Certificate
+                    Hashes</a> of certificates valid one week apart, meaning any fresh Passkey can be valid for 4 weeks,
+                with a minimum of 2 weeks.</p>
+                <p>Using Certificate Hashes this way allows for the browser to setup a valid TLS handshake WITHOUT
+                    needing a certificate signed from a Central Authority.</p>
+                <p>
+                <h3>FileID</h3>The Blake3 hash of the file that provides both a unique identifier and a method to verify
+                the downloaded file for any corruption.</p>
+
+                <h1 style="font-weight: 800;">Why?</h1>
+                <p>For sending large files its often impractical or expensive to upload to a 3rd party service (e.g. google drive, mediafire, discord). This site and its compainion application is designed to provide a quick and secure (from the perspective of 3rd party interference) method of direct file downloading.</p>
+                <h4 style="text-decoration: underline;">Note:</h4><p>This connection is a direct connection and may expose your ip to the address listed. If this is a concern for you do not use the downlod button. (Arguably your IP is exposed to any website you connect with anyway.)</p>
+            </div>
+
+        </div>
+    </main>
+
+
 </body>
+
+</html>
