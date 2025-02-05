@@ -34,13 +34,15 @@ export default class GithubActivity extends Component {
 					let ghevent = this.state[k]
 					switch (ghevent.type) {
 						case 'PushEvent':
-							let commits = ghevent.payload.commits
+							let commits = ghevent.payload.commits.slice(0, 4);
 							for (let commit in commits) {
 								commits[commit].shortSha = commits[commit].sha.substring(0, 7)
 							}
+							let contStr = ghevent.payload.commits.length > 3 ? ", (...)" : "";
 							return html`
 								<li>
-									<i style="font-size: 12px;">${new Date(ghevent.created_at).toLocaleDateString()}</i> commit <a href=${commits[0].url} onclick=${this.redirectAPItoHTML}><i>${commits[0].shortSha}</i></a>${commits.slice(1).map( commit => html`, <a href=${commit.url} onclick=${this.redirectAPItoHTML}><i>${commit.shortSha}</i></a>`)} pushed to <a href=${ghevent.repo.url} onclick=${this.redirectAPItoHTML}>${ghevent.repo.name}</a>
+									<i style="font-size: 12px;">${new Date(ghevent.created_at).toLocaleDateString()}</i> commit <a href=${commits[0].url} onclick=${this.redirectAPItoHTML}><i>${commits[0].shortSha}</i>
+									</a>${commits.slice(1).map( commit => html`, <a href=${commit.url} onclick=${this.redirectAPItoHTML}><i>${commit.shortSha}</i></a>`)}${contStr} pushed to <a href=${ghevent.repo.url} onclick=${this.redirectAPItoHTML}>${ghevent.repo.name}</a>
 								</li>`
 						case 'IssueCommentEvent':
 							return html`
