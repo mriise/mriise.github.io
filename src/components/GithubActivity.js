@@ -38,7 +38,7 @@ export default class GithubActivity extends Component {
 							for (let commit in commits) {
 								commits[commit].shortSha = commits[commit].sha.substring(0, 7)
 							}
-							let contStr = ghevent.payload.commits.length > 3 ? ", (...)" : "";
+							let contStr = ghevent.payload.commits.length > 4 ? ", (...)" : "";
 							return html`
 								<li>
 									<i style="font-size: 12px;">${new Date(ghevent.created_at).toLocaleDateString()}</i> commit <a href=${commits[0].url} onclick=${this.redirectAPItoHTML}><i>${commits[0].shortSha}</i>
